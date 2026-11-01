@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f3f1ea">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Крепче">
+<meta name="description" content="Крепче — личностный тренажёр: 28 дней практик по 24 книгам об отношениях.">
+<meta property="og:title" content="Крепче — личностный тренажёр">
+<meta property="og:description" content="28 дней практик по 24 книгам об отношениях. Любовь к себе, вера в себя, маленькие шаги, крепкая семья.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Крепче</title>
+<style>
+/* Layout: phone-first app, fixed bottom nav, one scrolling screen per tab. Reading-room feel: stone paper, graphite ink, jade accent, four track hues. */
+:root{
+  --bg:#f3f1ea; --bg-2:#ebe8df; --card:#fbfaf6; --line:#d9d4c6;
+  --fg:#22261f; --muted:#6c7064; --accent:#2f6f5e; --accent-2:#245648; --on-accent:#f6fbf8;
+  --done:#2f6f5e; --done-bg:#e1efe9; --warn:#b8542c;
+  --t-self:#b2503f; --t-faith:#2f6f5e; --t-steps:#b07a1f; --t-family:#4b5a9a;
+  --display:"New York",Georgia,"Noto Serif","Times New Roman",serif;
+  --body:-apple-system,Roboto,"Noto Sans","Segoe UI",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#161815; --bg-2:#1e211d; --card:#232723; --line:#363b35;
+    --fg:#ebe9e0; --muted:#9ea297; --accent:#6fb59f; --accent-2:#8fcdb9; --on-accent:#10211b;
+    --done:#6fb59f; --done-bg:#1f332c; --warn:#e08a63;
+    --t-self:#e2857a; --t-faith:#6fb59f; --t-steps:#d9a74a; --t-family:#8f9ce0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161815; --bg-2:#1e211d; --card:#232723; --line:#363b35;
+  --fg:#ebe9e0; --muted:#9ea297; --accent:#6fb59f; --accent-2:#8fcdb9; --on-accent:#10211b;
+  --done:#6fb59f; --done-bg:#1f332c; --warn:#e08a63;
+  --t-self:#e2857a; --t-faith:#6fb59f; --t-steps:#d9a74a; --t-family:#8f9ce0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;overflow-x:hidden;max-width:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 calc(86px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;display:grid;gap:16px;padding-top:14px}
+.wrap>*,.card>*,.field>*{min-width:0}
+.screen[hidden]{display:none}
+h1{font-family:var(--display);font-weight:700;font-size:32px;line-height:1.05;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:23px;margin:0;line-height:1.15;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:19px;margin:0;line-height:1.2}
+p{margin:0}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.muted{color:var(--muted);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:12px}
+.card.t{border-left:4px solid var(--tc)}
+.card .head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.card .head h2{color:var(--tc,var(--fg))}
+.idea{font-family:var(--display);font-size:18px;line-height:1.45}
+.book{font-size:12px;color:var(--muted);letter-spacing:.02em}
+.book b{color:var(--fg);font-weight:500}
+.note{background:var(--bg-2);border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.5}
+.note b{color:var(--tc,var(--accent));font-weight:600}
+.field{display:grid;gap:6px}
+.field label{font-size:12px;color:var(--muted);letter-spacing:.02em;display:flex;justify-content:space-between;gap:8px}
+.field label span{color:var(--fg);font-weight:600;font-variant-numeric:tabular-nums}
+textarea,input[type=text]{width:100%;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:16px;min-width:0}
+textarea{resize:vertical;min-height:60px;line-height:1.4}
+.kt{display:grid;gap:6px}
+.kt .r{display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:center}
+.kt .r span{color:var(--muted);font-size:12px;text-align:right;font-variant-numeric:tabular-nums}
+.sc{display:grid;gap:8px}
+.sc .it{display:grid;gap:4px}
+.sc .it input[type=range]{width:100%;accent-color:var(--tc,var(--accent));height:28px}
+.sc .it label{font-size:14px;display:flex;justify-content:space-between;gap:8px}
+.sc .it label b{font-variant-numeric:tabular-nums;color:var(--tc,var(--accent))}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);border-radius:99px;padding:7px 12px;font-size:13px;font-weight:500;color:var(--muted);background:var(--bg-2)}
+.chip[aria-pressed="true"]{background:var(--tc,var(--accent));color:var(--on-accent);border-color:var(--tc,var(--accent))}
+.task{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2)}
+.task .bx{width:26px;height:26px;border-radius:8px;border:2px solid var(--tc,var(--accent));display:grid;place-items:center;color:transparent;font-size:15px;font-weight:700;margin-top:1px}
+.task[aria-pressed="true"]{background:var(--done-bg);border-color:transparent}
+.task[aria-pressed="true"] .bx{background:var(--done);border-color:var(--done);color:var(--on-accent)}
+.task span.tx{font-size:15px;line-height:1.4}
+.task[aria-pressed="true"] span.tx{color:var(--muted)}
+.primary{padding:11px 16px;border-radius:11px;background:var(--accent);color:var(--on-accent);font-weight:600;font-size:15px;justify-self:center}
+.ghost{padding:9px 14px;border-radius:10px;border:1px solid var(--line);color:var(--muted);font-weight:500;font-size:14px}
+.daybar{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.daybar button{width:40px;height:40px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:18px}
+.daybar .d{text-align:center;display:grid}
+.daybar .d b{font-family:var(--display);font-size:22px;font-weight:700}
+.daybar .d small{color:var(--muted);font-size:12px}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.meter .r{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.meter .r b{color:var(--fg);font-weight:600;font-variant-numeric:tabular-nums}
+.grid28{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.grid28 button{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;display:grid;place-items:center;background:var(--bg-2)}
+.grid28 button.on{background:var(--tc);color:var(--on-accent);border-color:var(--tc)}
+.grid28 button.cur{outline:2px solid var(--fg);outline-offset:1px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:2px}
+.stat b{font-family:var(--display);font-size:28px;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.stat small{font-size:11px;color:var(--muted)}
+/* mode switch */
+.mode{display:flex;gap:4px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:3px}
+.mode button{flex:1;padding:8px 4px;border-radius:8px;font-size:14px;font-weight:600;color:var(--muted)}
+.mode button[aria-selected="true"]{background:var(--card);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.18)}
+.welcome{display:grid;gap:14px;text-align:center;padding:24px 16px;border-radius:16px;background:var(--card);border:1px solid var(--line)}
+.welcome h1{font-size:40px}
+.welcome .mode{max-width:320px;margin:0 auto;width:100%}
+.tracklist{display:grid;gap:8px}
+.tracklist button{display:grid;grid-template-columns:8px 1fr auto;gap:12px;align-items:center;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.tracklist button i{width:8px;height:40px;border-radius:4px;background:var(--tc)}
+.tracklist button b{font-family:var(--display);font-size:19px}
+.tracklist button small{color:var(--muted);font-size:12px;display:block}
+.tracklist button .n{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+.plist{display:grid;gap:6px}
+.plist button{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;text-align:left;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:15px}
+.plist button b{font-family:var(--display);font-size:18px;color:var(--tc);font-variant-numeric:tabular-nums}
+.plist button small{display:block;color:var(--muted);font-size:12px}
+.plist button .ok{color:var(--done);font-weight:700}
+.back{color:var(--accent);font-weight:600;font-size:14px;justify-self:start}
+/* quiz */
+.q{display:grid;gap:10px}
+.q .qi{display:grid;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
+.q .qi:first-child{border-top:0}
+.q .qi p{font-size:15px}
+.q .opts{display:flex;gap:6px}
+.q .opts button{flex:1;padding:8px 4px;border-radius:8px;border:1px solid var(--line);font-size:13px;color:var(--muted);background:var(--bg-2)}
+.q .opts button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.res{display:grid;gap:10px;border-left:4px solid var(--accent)}
+.res .lab{font-family:var(--display);font-size:24px;color:var(--accent)}
+.res .bars{display:grid;gap:6px}
+.res .bars .b{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:13px;align-items:center}
+.res .bars .b .bar{grid-column:1/-1}
+details{border:1px solid var(--line);border-radius:12px;padding:0 14px;background:var(--card)}
+details summary{cursor:pointer;padding:12px 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details summary::after{content:"+";color:var(--accent);font-size:18px;flex:none}
+details[open] summary::after{content:"–"}
+details .in{padding:0 0 14px;display:grid;gap:8px;font-size:14px;line-height:1.5;color:var(--muted)}
+details .in b{color:var(--fg)}
+.booklist{display:grid;gap:8px}
+.bk{display:grid;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.bk b{font-family:var(--display);font-size:18px}
+.bk .a{font-size:12px;color:var(--muted);letter-spacing:.02em}
+.bk p{font-size:14px}
+.bk .tl{font-size:13px;color:var(--accent)}
+.log{display:grid;gap:6px}
+.log .e{display:grid;grid-template-columns:1fr auto;gap:8px;background:var(--bg-2);border-radius:10px;padding:8px 10px;font-size:14px}
+.log .e small{display:block;color:var(--muted);font-size:11px}
+.log .e .x{color:var(--muted);font-size:16px}
+.addrow{display:grid;grid-template-columns:1fr auto;gap:6px}
+.addrow button{padding:6px 14px;border-radius:9px;background:var(--accent);color:var(--on-accent);font-weight:600}
+/* nav */
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);
+  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.bottom .in{display:flex;gap:2px;padding:0 4px;max-width:560px;margin:0 auto}
+nav.bottom button{flex:1;display:grid;justify-items:center;gap:2px;padding:9px 2px 7px;font-size:10px;white-space:nowrap;font-weight:600;color:var(--muted)}
+nav.bottom button span{font-size:19px;line-height:1}
+nav.bottom button[aria-selected="true"]{color:var(--accent)}
+.status{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(78px + env(safe-area-inset-bottom,0px));background:var(--card);border:1px solid var(--line);color:var(--muted);font-size:12px;padding:6px 12px;border-radius:99px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:30}
+.status.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap" id="root">
+  <section class="screen" id="s-today"></section>
+  <section class="screen" id="s-tracks" hidden></section>
+  <section class="screen" id="s-quiz" hidden></section>
+  <section class="screen" id="s-books" hidden></section>
+  <section class="screen" id="s-me" hidden></section>
+</main>
+<nav class="bottom" id="nav" hidden><div class="in">
+  <button type="button" data-tab="today" aria-selected="true"><span>☀︎</span>Сегодня</button>
+  <button type="button" data-tab="tracks"><span>◈</span>Практики</button>
+  <button type="button" data-tab="quiz"><span>◔</span>Тесты</button>
+  <button type="button" data-tab="books"><span>▤</span>Книги</button>
+  <button type="button" data-tab="me"><span>✦</span>Путь</button>
+</div></nav>
+<div class="status" id="status" aria-live="polite"></div>
+
+<script>
+/* Содержание тренажёра. Шаблоны пола: {мужской вариант|женский вариант} */
+var TRACKS = [
+  { id:'self', name:'Любовь к себе', short:'Я', color:'var(--t-self)', intro:'Умение относиться к себе с заботой и уважением. Фромм называл любовь к себе условием любви к другому: кто умеет заботиться о себе, тот умеет заботиться вообще.' },
+  { id:'faith', name:'Вера в себя', short:'Опора', color:'var(--t-faith)', intro:'Внутренняя опора: умение принимать решения, выдерживать тревогу и опираться на факты о себе, а не на страхи.' },
+  { id:'steps', name:'Маленькие шаги', short:'Шаги', color:'var(--t-steps)', intro:'Готтман сформулировал это как «small things often»: отношения и характер строятся из мелких повторяющихся действий, а не из редких больших жестов.' },
+  { id:'family', name:'Крепкая семья', short:'Мы', color:'var(--t-family)', intro:'Навыки пары: понимать циклы близости и дистанции, говорить о потребностях прямо, отвечать на попытки сближения и принимать честные решения.' }
+];
+
+var PRACTICES = [
+
+  /* ---------- Маршрут «Когда нет сил» (мужской режим) ---------- */
+  { id:'l1', track:'self', mode:'m', title:'Аккумулятор', book:'Д. Дейда · «Путь настоящего мужчины»; А. Курпатов · «Мужчина и женщина»',
+    idea:'Ощущение «я камень, мне всё равно» редко означает, что чувства ушли. Чаще это разряженный аккумулятор: мозг экономит энергию и выключает всё, что требует усилий, включая близость. Дейда пишет, что мужчина восстанавливается через тело, дисциплину и своё дело; Курпатов добавляет: истощённый мозг объясняет пустоту «отсутствием любви», потому что так проще, чем признать усталость.',
+    ex:{type:'fields', prompt:'Мой баланс энергии за последнюю неделю', fields:['Что меня разряжает (люди, дела, привычки, экран)','Что меня заряжало раньше, когда я был «в строю»','Что из этого я могу сделать уже сегодня хотя бы на 15 минут']},
+    step:'Сегодня: 15 минут на одно заряжающее дело из третьего поля, до телефона.',
+    q:'Что изменилось в ощущении «всё равно» после этого?' },
+  { id:'l6', track:'faith', mode:'m', title:'Из состояния силы', book:'А. Карпавичус · «Расстаться нельзя остаться»',
+    idea:'Карпавичус разводит два вопроса, которые в усталости сливаются в один: «мне плохо» и «я не хочу этих отношений». Проверка простая. Представь, что у тебя всё есть: силы, деньги, уверенность, ты ничем не ограничен. Хочешь ли ты в этом состоянии быть с ней? Если ответ «да», расставание продиктовано состоянием, и работать нужно с состоянием. Если «нет», это честный ответ, с которым тоже можно идти дальше.',
+    ex:{type:'fields', prompt:'Проверка', fields:['Если бы у меня всё было и я всё мог — хочу ли я быть с ней? (да / нет / не знаю)','Что в отношениях я хочу сохранить','Что именно я хочу изменить, в себе или между нами','Что из этого зависит от моего состояния, а что от самих отношений']},
+    step:'Сегодня: записать ответ на первый вопрос одним словом и не перечитывать до вечера.',
+    q:'Совпал ли вечерний ответ с утренним?' },
+  { id:'l7', track:'family', mode:'m', title:'Разговор глаза в глаза', book:'Д. Готтман · «7 принципов счастливого брака»; С. Джонсон · «Обними меня крепче»',
+    idea:'Важные вещи говорят лично, и второй стороне дают высказаться. Готтман называет это «мягким началом»: разговор начинается с «я чувствую» и с конкретной ситуации, без обвинений. Джонсон добавляет главное: под любым трудным разговором лежит вопрос «ты рядом?», и честный ответ на него важнее формулировок. Фраза, сказанная из страха («даю тебе полную свободу»), исправляется прямо: «я сказал это из страха, на самом деле я хочу…».',
+    ex:{type:'fields', prompt:'Подготовка разговора', fields:['Что я хочу сказать ей (одной-двумя фразами, с «я чувствую»)','Что я хочу от неё услышать','Что я скажу о фразах, сказанных из страха','Когда и где этот разговор состоится лично']},
+    step:'Сегодня: назначить дату и место разговора и записать их.',
+    q:'Чего я боюсь в этом разговоре и что случится в худшем случае?' },
+  /* ---------- Любовь к себе ---------- */
+  { id:'a1', track:'self', title:'Любовь как умение', book:'Э. Фромм · «Искусство любить»',
+    idea:'Фромм описывает любовь как умение, которому учатся, подобно музыке или ремеслу. У неё четыре составляющих: забота, ответственность, уважение и знание. Он подчёркивает, что эти же четыре применимы к себе: человек, который умеет заботиться о себе, умеет заботиться вообще.',
+    ex:{type:'fields', prompt:'Как это проявляется по отношению ко мне {самому|самой} прямо сейчас?', fields:['Забота: что я делаю для своего тела и сил','Ответственность: за что в своей жизни я отвечаю сам{|а}','Уважение: где я уважаю свои границы и желания','Знание: что я знаю о себе точно']},
+    step:'Сегодня: 10 минут чистой заботы о себе (еда, сон, прогулка, тишина).',
+    q:'Какая из четырёх составляющих у меня самая слабая и что я сделаю с ней завтра?' },
+  { id:'a2', track:'self', title:'Солнечный и теневой ребёнок', book:'С. Шталь · «Ребёнок в тебе может найти любовь»',
+    idea:'Шталь предлагает различать два внутренних состояния: «теневого ребёнка», который носит ранние убеждения («я недостаточно хорош{|а}», «меня оставят»), и «солнечного ребёнка», который помнит, что {он любим|она любима} и ценен{|на}. Большинство ссор в паре запускает именно теневой ребёнок, реагируя на старую рану, а не на сегодняшнюю ситуацию.',
+    ex:{type:'fields', prompt:'Два портрета', fields:['Три убеждения моего теневого ребёнка (начни с «Я…»)','Что их пробуждает в отношениях','Три утверждения солнечного ребёнка, которые верны уже сейчас']},
+    step:'Сегодня: произнести одно солнечное утверждение вслух, глядя в зеркало.',
+    q:'В какой момент сегодня говорил{|а} теневой ребёнок, а в какой — взрослый?' },
+  { id:'a3', track:'self', title:'Дом внутри', book:'О. Примаченко · «С тобой я дома»',
+    idea:'Примаченко описывает отношения как место, где можно быть собой без притворства. Такое место начинается внутри: пока человек не чувствует себя дома в самом себе, он ищет этот дом в другом и требует от партнёра того, что может дать себе сам.',
+    ex:{type:'list', prompt:'Пять вещей, которые дают мне ощущение дома внутри (занятия, места, люди, ритуалы)', count:5},
+    step:'Сегодня: сделать один пункт из списка.',
+    q:'Что из этого я могу устроить себе в любой день, независимо от других людей?' },
+  { id:'a4', track:'self', title:'Любовь без боли', book:'И. Литвиненко · «Любовь — не боль»',
+    idea:'Литвиненко разбирает, как привычка терпеть превращает отношения в источник постоянной боли. Признак здоровой любви простой: после общения с партнёром сил становится больше. Если сил регулярно становится меньше, это сигнал для разговора или решения.',
+    ex:{type:'scale', prompt:'Оцени по шкале от 0 до 10', items:['После общения с партнёром у меня прибавляется сил','Я могу сказать «нет» и остаться в отношениях','Мои желания учитываются так же, как желания партнёра','Я не боюсь говорить о том, что мне не нравится']},
+    step:'Сегодня: одно вежливое «нет» тому, что отнимает силы.',
+    q:'Что я терплю, считая это нормой?' },
+  { id:'a5', track:'self', title:'{Мой дар|Где я спасаю}', book:'{Д. Дейда · «Путь настоящего мужчины»|Р. Норвуд · «Женщины, которые любят слишком сильно»}',
+    idea:'{Дейда утверждает: мужчина чувствует себя целым, когда живёт из своего глубинного предназначения, а не из страха и одобрения партнёрши. Отношения становятся опорой, когда у мужчины есть собственное дело и дар, которым он делится с миром.|Норвуд описывает женщин, которые принимают заботу о чужих проблемах за любовь. Такая женщина выбирает партнёров, которых нужно «спасать», и чувствует себя нужной, пока спасает. Выход начинается с перевода внимания с партнёра на собственную жизнь.}',
+    ex:{type:'list', prompt:'{Три дела, в которых я чувствую свою силу и полезность миру|Три ситуации, где я беру на себя чужую ответственность}', count:3},
+    step:'{Сегодня: 30 минут на дело, которое я считаю своим предназначением.|Сегодня: одну чужую задачу оставить её хозяину.}',
+    q:'{Что я делаю ради одобрения, а не из внутреннего выбора?|Что я получаю, когда спасаю, и где я могу получать это иначе?}' },
+  { id:'a6', track:'self', title:'Банк доказательств', book:'А. Курпатов · «Мужчина и женщина»',
+    idea:'Курпатов напоминает, что самооценка формируется мозгом из повторяющегося опыта. Мозг запоминает то, на что направлено внимание: если ежедневно замечать неудачи, самооценка падает; если ежедневно фиксировать факты справления, она растёт. Это тренировка, а не самовнушение.',
+    ex:{type:'list', prompt:'Три факта за сегодня, что я справляюсь (конкретные действия)', count:3, bank:true},
+    step:'Сегодня: записать три факта. Это и есть шаг.',
+    q:'Какой из фактов я бы раньше не заметил{|а}?' },
+  { id:'a7', track:'self', title:'Чем я стал{|а} больше', book:'Г. Левандовски · «Крепче, чем ты думаешь»',
+    idea:'Левандовски опирается на модель саморасширения: здоровые отношения делают человека больше — добавляют навыки, интересы, круг общения. Тот же принцип работает для отношений с собой: человек, который растёт сам, приносит в пару ресурс, а не пустоту.',
+    ex:{type:'fields', prompt:'Моё расширение за год', fields:['Чему я научил{ся|ась} сам{|а}','Что я приобрёл{|ла} благодаря отношениям','Чего мне не хватает для роста сейчас']},
+    step:'Сегодня: одно новое дело или место, где я не был{|а}.',
+    q:'Что я хочу добавить к себе в ближайший месяц?' },
+
+  /* ---------- Вера в себя ---------- */
+  { id:'b1', track:'faith', title:'{Жить из цели|Стандарты и требования}', book:'{Д. Дейда · «Путь настоящего мужчины»|С. Харви · «Поступай как женщина, думай как мужчина»}',
+    idea:'{Дейда: мужчина, у которого есть ясная цель, спокоен в отношениях, потому что его ценность не зависит от настроения партнёрши. Цель задаёт направление, и на него можно опереться в любой день.|Харви советует женщине заранее знать свои стандарты (как со мной можно обращаться) и требования (что я жду от партнёра). Женщина с ясными стандартами вызывает уважение и легко отсекает неподходящие варианты.}',
+    ex:{type:'list', prompt:'{Мои три главные цели на год (своими словами)|Мои три стандарта: как со мной можно и как нельзя}', count:3},
+    step:'{Сегодня: 20 минут на главную цель, до всего остального.|Сегодня: один раз обозначить стандарт вслух, спокойно.}',
+    q:'{Где я отступаю от своей цели ради чужого одобрения?|Какой стандарт я нарушаю сам{|а}, чтобы не потерять человека?}' },
+  { id:'b2', track:'faith', title:'Взрослый у руля', book:'С. Шталь · «Ребёнок в тебе может найти любовь»',
+    idea:'Шталь описывает «внутреннего взрослого» как часть, которая умеет смотреть на факты и выбирать реакцию. Переключение простое: заметить, что сработала старая рана, назвать её и спросить, что здесь на самом деле происходит.',
+    ex:{type:'fields', prompt:'Разбор одной ситуации', fields:['Ситуация, где я отреагировал{|а} резко или обиделся{|лась}','Что сказал теневой ребёнок','Что видит взрослый: факты без оценок','Как бы ответил взрослый']},
+    step:'Сегодня: в одном споре сделать паузу 10 секунд перед ответом.',
+    q:'Какую фразу я могу использовать, чтобы вернуть себе взрослого?' },
+  { id:'b3', track:'faith', title:'Страх → факт → действие', book:'А. Курпатов · «Мужчина и женщина»',
+    idea:'Курпатов показывает, что тревога питается неопределённостью, а мозг успокаивается от конкретного действия. Цепочка «страх, факт, действие» переводит переживание в задачу, которую можно выполнить.',
+    ex:{type:'fields', prompt:'Одна тревога', fields:['Чего я боюсь (одной фразой)','Что известно точно','Какое действие уменьшит неопределённость в ближайшие сутки']},
+    step:'Сегодня: выполнить действие из третьего поля.',
+    q:'Насколько снизилась тревога после действия (0–10)?' },
+  { id:'b4', track:'faith', title:'Протест или просьба', book:'А. Левин, Р. Хеллер · «Подходим друг другу»',
+    idea:'Левин и Хеллер описывают «протестное поведение»: когда человек с тревожной привязанностью не получает отклика, он начинает звонить без конца, молчать в наказание, провоцировать ревность. Партнёр видит протест, а потребность остаётся скрытой. Прямая просьба работает лучше любого протеста.',
+    ex:{type:'fields', prompt:'Перевод протеста в просьбу', fields:['Как я обычно протестую (молчу, обижаюсь, проверяю, исчезаю)','Какая потребность стоит за этим','Та же потребность, сказанная прямо: «Мне важно… Можешь ли ты…»']},
+    step:'Сегодня: сказать одну потребность прямой просьбой.',
+    q:'Что я почувствовал{|а}, произнося просьбу без упрёка?' },
+  { id:'b5', track:'faith', title:'Право голоса', book:'И. Литвиненко · «Любовь — не боль»',
+    idea:'Литвиненко подчёркивает: человек, который молчит о своих потребностях, постепенно перестаёт их замечать сам. Умение сказать «мне не подходит» возвращает ощущение авторства собственной жизни.',
+    ex:{type:'list', prompt:'Три вещи, о которых я давно молчу (в паре, в семье, на работе)', count:3},
+    step:'Сегодня: озвучить одну из трёх в спокойной форме.',
+    q:'Что самое страшное могло случиться и случилось ли?' },
+  { id:'b6', track:'faith', title:'Решение принимаю я', book:'А. Карпавичус · «Расстаться нельзя остаться»',
+    idea:'Карпавичус показывает, как откладывание решения истощает сильнее любого исхода. Человек, застрявший между «уйти» и «остаться», живёт в постоянном фоне тревоги. Любое решение, принятое ясно, возвращает силы.',
+    ex:{type:'list', prompt:'Три решения, которые я откладываю (любой области)', count:3},
+    step:'Сегодня: принять самое маленькое из трёх и выполнить первое действие.',
+    q:'Что я узнал{|а} о себе, когда перестал{|а} откладывать?' },
+  { id:'b7', track:'faith', title:'Мой темперамент в любви', book:'Х. Фишер · исследования биологии любви',
+    idea:'Фишер выделяет четыре темперамента, связанных с нейрохимией: Исследователь (дофамин, новизна), Строитель (серотонин, порядок), Руководитель (тестостерон, прямота), Дипломат (эстроген, эмпатия). Знание своего типа помогает понять, что для меня естественно и чего я жду от близости.',
+    ex:{type:'scale', prompt:'Насколько про меня (0–10)', items:['Исследователь: мне нужны новизна, движение, впечатления','Строитель: мне важны стабильность, правила, план','Руководитель: я прямой{|ая}, решительный{|ая}, люблю ясность','Дипломат: я чувствую людей, ищу глубину и смысл']},
+    step:'Сегодня: сделать одно дело, которое питает мой ведущий тип.',
+    q:'Какой тип у моего партнёра и где наши типы дополняют друг друга?' },
+
+  /* ---------- Маленькие шаги ---------- */
+  { id:'c1', track:'steps', title:'Самый маленький шаг', book:'Д. Готтман · «7 принципов счастливого брака»',
+    idea:'Готтман выяснил, что устойчивые пары отличаются не большими жестами, а частотой маленьких: короткое внимание, улыбка, помощь в мелочи. Принцип переносится на любую цель: прогресс создаёт повторение крошечного действия, которое невозможно не сделать.',
+    ex:{type:'fields', prompt:'Одна цель', fields:['Цель (чего хочу)','Шаг на 2 минуты, который я могу сделать сегодня','Когда именно (после какого привычного действия)']},
+    step:'Сегодня: сделать двухминутный шаг.',
+    q:'Что мешало сделать это раньше?' },
+  { id:'c2', track:'steps', title:'Одна черта — одно действие', book:'Г. Чепмен · «Любовь как образ жизни»',
+    idea:'Чепмен описывает семь черт любящего человека: доброта, терпение, прощение, вежливость, смирение, щедрость, честность. Каждую можно тренировать отдельно, одним действием в день, как мышцу.',
+    ex:{type:'choice', prompt:'Черта на сегодня', options:['Доброта','Терпение','Прощение','Вежливость','Смирение','Щедрость','Честность'], after:'Одно конкретное действие с этой чертой'},
+    step:'Сегодня: выполнить действие из поля.',
+    q:'Как отреагировал человек, на которого было направлено действие?' },
+  { id:'c3', track:'steps', title:'Попытки сближения', book:'Д. Готтман · «7 принципов счастливого брака»',
+    idea:'Готтман называет «попыткой сближения» любое маленькое обращение: вопрос, шутка, «посмотри». В крепких парах партнёры откликаются на 86 % таких попыток, в распадающихся — на 33 %. Отклик занимает секунды и стоит больше любого подарка.',
+    ex:{type:'list', prompt:'Три попытки сближения, которые я заметил{|а} сегодня (от партнёра, ребёнка, друга) и как ответил{|а}', count:3},
+    step:'Сегодня: откликнуться на каждую попытку, которую заметил{|а}.',
+    q:'Какие попытки я обычно пропускаю?' },
+  { id:'c4', track:'steps', title:'Якорь привычки', book:'А. Курпатов · «Мужчина и женщина»',
+    idea:'Курпатов опирается на то, как мозг закрепляет поведение: новое действие держится, если привязано к уже существующему. Формула проста: «после того как я (привычное), я делаю (новое)».',
+    ex:{type:'fields', prompt:'Моя связка', fields:['После того как я…','…я делаю (новое действие до 5 минут)']},
+    step:'Сегодня: выполнить связку один раз.',
+    q:'Какой якорь оказался самым надёжным за неделю?' },
+  { id:'c5', track:'steps', title:'Дело без ожидания', book:'Р. Нарушевич · «Учимся любить друг друга»',
+    idea:'Нарушевич говорит о любви как о служении: маленькое дело для близкого, сделанное без расчёта на ответ, меняет атмосферу в семье быстрее любых разговоров. Ожидание благодарности превращает дар в сделку.',
+    ex:{type:'fields', prompt:'Одно дело', fields:['Что я сделаю для близкого человека сегодня','Что я при этом ничего не жду взамен (проверь честно)']},
+    step:'Сегодня: сделать дело молча.',
+    q:'Что я почувствовал{|а}, когда сделал{|а} и ничего не ждал{|а}?' },
+  { id:'c6', track:'steps', title:'Намёк → просьба', book:'В. Павлов · «Мужские обиды, женские намёки»',
+    idea:'Павлов показывает типичный сбой: {женщина намекает, мужчина не расшифровывает, оба обижаются.|мужчина обижается молча, женщина намекает, оба ждут, что другой догадается.} Один переведённый намёк в прямую просьбу экономит неделю обид.',
+    ex:{type:'fields', prompt:'Перевод', fields:['Намёк, который я {слышал|делала} недавно','Просьба, которая за ним стоит, одной фразой','Как я могу {уточнить: «Ты хочешь, чтобы я…?»|попросить прямо: «Сделай, пожалуйста…»}']},
+    step:'Сегодня: {уточнить один намёк вопросом|одну просьбу сказать без намёка}.',
+    q:'Что изменилось в ответе собеседника?' },
+  { id:'c7', track:'steps', title:'Достаточно хорошо', book:'О. Примаченко · «С тобой я дома»',
+    idea:'Примаченко напоминает о бережности к себе: привычка требовать от себя идеального результата съедает силы на следующий шаг. «Достаточно хорошо» сегодня позволяет продолжить завтра.',
+    ex:{type:'list', prompt:'Три дела, которые сегодня были сделаны достаточно хорошо', count:3},
+    step:'Сегодня: остановиться на «достаточно» в одном деле и отдохнуть.',
+    q:'Где я требую от себя больше, чем требовал{|а} бы от друга?' },
+
+  /* ---------- Крепкая семья ---------- */
+  { id:'d1', track:'family', title:'Карта любви', book:'Д. Готтман · «7 принципов счастливого брака»',
+    idea:'Первый принцип Готтмана: крепкие пары знают внутренний мир друг друга — страхи, мечты, друзей, любимое и нелюбимое. Это знание он называет «картой любви», и она требует обновления, потому что люди меняются.',
+    ex:{type:'fields', prompt:'Карта (если сейчас без пары — заполни о себе, чтобы знать, чем делиться)', fields:['Что сейчас больше всего тревожит партнёра','Главная мечта партнёра на ближайший год','Что партнёр любит делать в одиночестве','Кто сейчас для партнёра важный человек, кроме меня']},
+    step:'Сегодня: задать партнёру один вопрос из карты и выслушать до конца.',
+    q:'Какой ответ меня удивил?' },
+  { id:'d2', track:'family', title:'Наш танец', book:'С. Джонсон · «Обними меня крепче»',
+    idea:'Джонсон описывает «негативный танец» пары: один преследует (упрёки, вопросы), второй отстраняется (молчит, уходит), и каждый шаг усиливает другой. Под танцем лежит один вопрос: «Ты рядом, когда я нуждаюсь?» Формула доступности ARE: доступность, отзывчивость, вовлечённость.',
+    ex:{type:'fields', prompt:'Разбор танца', fields:['Моя роль в ссоре: преследую или отстраняюсь','Что я на самом деле хочу услышать от партнёра в этот момент','Фраза для партнёра: «Когда ты…, я чувствую…, и мне нужно…»']},
+    step:'Сегодня: сказать партнёру фразу из третьего поля в спокойное время.',
+    q:'Что партнёр ответил и что я почувствовал{|а}?' },
+  { id:'d3', track:'family', title:'Пещера и волна', book:'Д. Грэй · «Мужчины с Марса, женщины с Венеры»',
+    idea:'Грэй описывает два способа восстановления: уход «в пещеру» (побыть одному, решить проблему молча) и «волну» (выговориться, почувствовать поддержку и вернуться наверх). Конфликты возникают, когда один способ принимают за отвержение.',
+    ex:{type:'fields', prompt:'Мой способ', fields:['Как я восстанавливаюсь после трудного дня','Как восстанавливается партнёр','Что я скажу партнёру, уходя в свой способ: «Мне нужно…, я вернусь через…»']},
+    step:'Сегодня: предупредить партнёра о своём способе восстановления заранее.',
+    q:'Что я принимал{|а} за холодность, а это был способ восстановления?' },
+  { id:'d4', track:'family', title:'Парадокс страсти', book:'Д. Делис, К. Филлипс · «Парадокс страсти»',
+    idea:'Делис и Филлипс описывают «качели»: тот, кто любит сильнее, становится зависимым и теряет привлекательность; тот, кто любит меньше, чувствует вину и давление. Выход для первого — вернуть центр тяжести в свою жизнь; для второго — честность о своих чувствах.',
+    ex:{type:'scale', prompt:'Где я сейчас (0–10)', items:['Я жду сообщений и подстраиваю планы под партнёра','Я чувствую давление и вину за свою прохладу','У меня есть насыщенная жизнь вне отношений','Мы можем говорить о дисбалансе открыто']},
+    step:'Сегодня: {если люблю сильнее — вечер для своего дела; если меньше — один честный разговор|если люблю сильнее — вечер для своего дела; если меньше — один честный разговор}.',
+    q:'Кто сейчас на «верхней» позиции качелей и что с этим делать мне?' },
+  { id:'d5', track:'family', title:'Желание и расстояние', book:'Э. Перель · «Всегда желанные»',
+    idea:'Перель утверждает, что желание питается расстоянием и новизной, а близость — слиянием и предсказуемостью. Пары, в которых есть и то и другое, сохраняют страсть: у каждого своя территория, свои интересы, своё пространство, куда партнёр приглашён в гости.',
+    ex:{type:'fields', prompt:'Моя территория', fields:['Когда партнёр для меня наиболее привлекателен (в каких ситуациях)','Что в моей жизни принадлежит только мне','Что я могу вернуть себе, чтобы снова стать интересным{|ой}']},
+    step:'Сегодня: 1 час на собственную территорию без оправданий.',
+    q:'Что я увидел{|а} в партнёре нового за эту неделю?' },
+  { id:'d6', track:'family', title:'Потребность по формуле', book:'А. Левин, Р. Хеллер · «Подходим друг другу»',
+    idea:'Левин и Хеллер показывают, что надёжная привязанность строится на эффективной коммуникации: партнёр говорит о потребности прямо, без обвинений, и смотрит на реакцию. Реакция на прямую просьбу говорит о человеке больше, чем месяцы догадок.',
+    ex:{type:'fields', prompt:'Формула', fields:['Ситуация','Моё чувство (одно слово)','Моя потребность','Конкретная просьба с «можешь ли ты…»']},
+    step:'Сегодня: произнести формулу целиком.',
+    q:'Как отреагировал партнёр: услышал, отмахнулся, обиделся?' },
+  { id:'d7', track:'family', title:'Расстаться нельзя остаться', book:'А. Карпавичус · «Расстаться нельзя остаться»',
+    idea:'Карпавичус разводит два разных вопроса: «мне плохо в отношениях» и «отношения не подлежат восстановлению». Первое решается работой, второе — честным расставанием. Чтобы отличить одно от другого, он предлагает смотреть на факты: ремонтируемо ли то, что болит, и готовы ли оба ремонтировать.',
+    ex:{type:'fields', prompt:'Честный разбор', fields:['Что именно болит (факты, без оценок)','Это можно изменить? Что для этого нужно от меня и от партнёра','Что я уже пробовал{|а} и каков результат','Какое решение я приму, если ничего не изменится через 3 месяца']},
+    step:'Сегодня: один конкретный шаг в сторону принятого решения (разговор, пауза, план).',
+    q:'Что я узнал{|а} о себе из этого разбора?' }
+];
+
+/* Порядок 28-дневной программы: направления чередуются */
+var PROGRAM = (function(){ var out=[], order=['self','faith','steps','family']; for(var r=0;r<7;r++) order.forEach(function(t){ var p=PRACTICES.filter(function(x){return x.track===t&&!x.mode;})[r]; if(p) out.push(p.id); }); return out; })();
+/* Маршрут «Когда нет сил»: 7 дней восстановления опоры (мужской режим) */
+var PROGRAM_LOW = ['l1','b3','a6','c1','a7','l6','l7'];
+var ROUTES = { main:{name:'Основной', days:28, intro:'28 дней, четыре направления по очереди'}, low:{name:'Когда нет сил', days:7, intro:'7 дней: восстановить энергию и опору, затем принять решение из состояния силы'} };
+
+var QUIZZES = [
+  { id:'attach', title:'Стиль привязанности', book:'А. Левин, Р. Хеллер · «Подходим друг другу»', mode:'both',
+    intro:'Теория привязанности выделяет три взрослых стиля: надёжный, тревожный и избегающий. Стиль задаёт, как человек ведёт себя в близости и при угрозе разрыва. Оцени каждое утверждение.',
+    scale:['Нет','Иногда','Да'],
+    items:[
+      {t:'Я часто волнуюсь, что партнёр любит меня меньше, чем я его', k:'anx'},
+      {t:'Мне легко быть эмоционально близким{|ой} с партнёром', k:'sec'},
+      {t:'Мне некомфортно, когда партнёр хочет слишком много близости', k:'avo'},
+      {t:'Если партнёр не отвечает, я быстро думаю о худшем', k:'anx'},
+      {t:'Я предпочитаю решать проблемы сам{|а}, не привлекая партнёра', k:'avo'},
+      {t:'Я доверяю партнёру и не боюсь зависеть от него', k:'sec'},
+      {t:'Я иногда провоцирую ревность или молчу, чтобы проверить чувства', k:'anx'},
+      {t:'Когда отношения становятся серьёзными, мне хочется отдалиться', k:'avo'},
+      {t:'Я могу прямо сказать о своих потребностях, не боясь отказа', k:'sec'},
+      {t:'Мне трудно успокоиться после ссоры, пока партнёр не подтвердит чувства', k:'anx'},
+      {t:'Я ценю независимость выше близости', k:'avo'},
+      {t:'Ссоры не заставляют меня сомневаться в отношениях в целом', k:'sec'}
+    ],
+    result:function(s){ var keys={anx:'Тревожный',avo:'Избегающий',sec:'Надёжный'}; var top=Object.keys(s).sort(function(a,b){return s[b]-s[a];})[0];
+      var txt={anx:'Ведущая черта — тревожная привязанность. Для тебя важны подтверждения, и при тишине тревога растёт. Авторы рекомендуют: говорить о потребностях прямо (практика «Протест или просьба»), выбирать партнёров, способных на отклик, и строить собственную насыщенную жизнь.',
+        avo:'Ведущая черта — избегающая привязанность. Близость ощущается как давление, независимость — как безопасность. Авторы предлагают замечать «деактивирующие» мысли («он{а|} слишком», «мне нужно пространство») и проверять их фактами, а также учиться принимать поддержку маленькими порциями.',
+        sec:'Ведущая черта — надёжная привязанность. Ты способен{|на} на близость и автономию одновременно. Такой стиль служит опорой для партнёра с тревожной или избегающей чертой; главное — не брать на себя всю работу в паре.'};
+      return {label:keys[top], text:txt[top], bars:[['Тревожный',s.anx,8],['Избегающий',s.avo,8],['Надёжный',s.sec,8]]}; } },
+  { id:'lang', title:'Язык любви', book:'Г. Чепмен', mode:'both',
+    intro:'Чепмен описал пять способов, которыми люди чувствуют любовь. У каждого есть ведущий. Пара, говорящая на разных языках, часто любит друг друга и при этом чувствует себя нелюбимой.',
+    scale:['Нет','Иногда','Да'],
+    items:[
+      {t:'Для меня много значат слова «я горжусь тобой», «ты мне дорог{|а}»', k:'words'},
+      {t:'Мне важно, чтобы партнёр отложил телефон и был со мной целиком', k:'time'},
+      {t:'Неожиданный подарок или мелочь «подумал{|а} о тебе» трогает меня надолго', k:'gifts'},
+      {t:'Когда партнёр берёт на себя мои дела, я чувствую заботу', k:'acts'},
+      {t:'Объятие или прикосновение успокаивают меня быстрее слов', k:'touch'},
+      {t:'Критика в словах ранит меня сильнее любого поступка', k:'words'},
+      {t:'Отменённая встреча обижает больше, чем забытый подарок', k:'time'},
+      {t:'Я храню вещи, которые мне подарили, годами', k:'gifts'},
+      {t:'Слова без дел для меня мало стоят', k:'acts'},
+      {t:'Мне не хватает физической близости, когда её мало, даже вне секса', k:'touch'}
+    ],
+    result:function(s){ var keys={words:'Слова поддержки',time:'Время вместе',gifts:'Подарки',acts:'Помощь делом',touch:'Прикосновения'}; var top=Object.keys(s).sort(function(a,b){return s[b]-s[a];})[0];
+      return {label:keys[top], text:'Твой ведущий язык — «'+keys[top]+'». Скажи о нём партнёру прямо и спроси о его языке: по Чепмену, любовь «доходит», когда выражена на языке получателя. Один знак внимания в день на языке партнёра — хорошая практика из направления «Маленькие шаги».', bars:Object.keys(keys).map(function(k){return [keys[k],s[k],4];})}; } },
+  { id:'horse', title:'Четыре всадника', book:'Д. Готтман · «7 принципов счастливого брака»', mode:'both',
+    intro:'Готтман по стилю ссор предсказывал развод с точностью выше 90 %. Разрушители — четыре «всадника»: критика личности, презрение, защита и стена молчания. У каждого есть противоядие.',
+    scale:['Редко','Иногда','Часто'],
+    items:[
+      {t:'В ссоре я перехожу от поступка к личности: «ты всегда», «ты никогда»', k:'crit'},
+      {t:'Я закатываю глаза, передразниваю, говорю с сарказмом', k:'cont'},
+      {t:'Я сразу объясняю, почему я не виноват{|а}, и ищу вину в партнёре', k:'def'},
+      {t:'Я замолкаю, ухожу, «отключаюсь» посреди разговора', k:'wall'},
+      {t:'Партнёр критикует меня как человека, а не поступок', k:'crit'},
+      {t:'Партнёр высмеивает или унижает меня', k:'cont'},
+      {t:'Партнёр защищается и не признаёт своей части', k:'def'},
+      {t:'Партнёр уходит в молчание на часы или дни', k:'wall'}
+    ],
+    result:function(s){ var keys={crit:'Критика',cont:'Презрение',def:'Защита',wall:'Стена'}; var top=Object.keys(s).sort(function(a,b){return s[b]-s[a];})[0]; var total=s.crit+s.cont+s.def+s.wall;
+      var anti={crit:'Противоядие критике — мягкое начало: «я чувствую… когда… мне нужно…» вместо «ты всегда».',cont:'Противоядие презрению — культура уважения: ежедневно замечать и называть вслух, что партнёр сделал хорошо. Готтман считает презрение самым опасным всадником.',def:'Противоядие защите — принять свою часть ответственности: «да, здесь я был{|а} неправ{|а}».',wall:'Противоядие стене — физиологическая пауза: сказать «мне нужно 20 минут», уйти, успокоиться и обязательно вернуться.'};
+      return {label: total<=5?'Всадники под контролем':(total<=10?'Всадники появляются':'Всадники правят ссорой'), text:(total<=5?'Ссоры в вашей паре в основном остаются в рамках. ':'')+'Самый активный всадник — «'+keys[top]+'». '+anti[top], bars:Object.keys(keys).map(function(k){return [keys[k],s[k],4];})}; } },
+  { id:'pass', title:'Качели страсти', book:'Д. Делис, К. Филлипс · «Парадокс страсти»', mode:'both',
+    intro:'В большинстве пар один любит сильнее. Авторы называют того, кто сильнее, «нижним», а того, кто меньше, «верхним». Положение меняется со временем, и его можно выравнивать.',
+    scale:['Нет','Отчасти','Да'],
+    items:[
+      {t:'Я чаще пишу первым{|ой} и жду ответа', k:'low'},
+      {t:'Я чувствую вину за то, что меньше хочу близости', k:'high'},
+      {t:'Я подстраиваю свои планы под партнёра', k:'low'},
+      {t:'Мне иногда тесно, хочется дистанции', k:'high'},
+      {t:'Я боюсь, что партнёр уйдёт', k:'low'},
+      {t:'Я раздражаюсь на излишнее внимание партнёра', k:'high'},
+      {t:'Моя самооценка зависит от настроения партнёра', k:'low'},
+      {t:'Я замечаю, что партнёр старается больше меня', k:'high'}
+    ],
+    result:function(s){ var d=s.low-s.high; var label=d>=3?'Нижняя позиция: я люблю сильнее':(d<=-3?'Верхняя позиция: я люблю меньше':'Качели близки к равновесию');
+      var text=d>=3?'Твоя задача по Делису и Филлипс — вернуть центр тяжести в свою жизнь: собственные дела, друзья, цели. Привлекательность возвращается вместе с самостоятельностью. Практики: «Мой дар / Где я спасаю», «Желание и расстояние».':(d<=-3?'Твоя задача — честность. Вина и молчание усиливают качели. Авторы советуют прямо говорить о своих чувствах и дать партнёру возможность решать на основе правды. Практика: «Расстаться нельзя остаться».':'Равновесие — редкое и ценное состояние. Поддерживай его: у каждого своя территория и честный разговор о дисбалансе, как только он появляется.');
+      return {label:label, text:text, bars:[['Нижняя (люблю сильнее)',s.low,8],['Верхняя (люблю меньше)',s.high,8]]}; } },
+  { id:'norwood', title:'Люблю ли я слишком сильно', book:'Р. Норвуд · «Женщины, которые любят слишком сильно»', mode:'f',
+    intro:'Норвуд составила портрет женщины, для которой любовь означает страдание и спасение партнёра. Чем больше «да», тем сильнее выражен паттерн.',
+    scale:['Нет','Отчасти','Да'],
+    items:[
+      {t:'Меня привлекают мужчины, которым нужна помощь или «исправление»', k:'n'},
+      {t:'Я готова ждать, надеяться и стараться, когда отношения не приносят радости', k:'n'},
+      {t:'Я беру на себя больше половины ответственности за отношения', k:'n'},
+      {t:'Я боюсь остаться одна сильнее, чем остаться в плохих отношениях', k:'n'},
+      {t:'Моя самооценка зависит от того, нужна ли я кому-то', k:'n'},
+      {t:'Спокойный, надёжный мужчина кажется мне скучным', k:'n'},
+      {t:'Я оправдываю партнёра перед другими и перед собой', k:'n'},
+      {t:'Я пытаюсь контролировать его поведение «для его же блага»', k:'n'},
+      {t:'Мне сложно уделять время себе, когда у партнёра проблемы', k:'n'},
+      {t:'В детстве я рано научилась заботиться о взрослых', k:'n'}
+    ],
+    result:function(s){ var v=s.n; var label=v<=5?'Паттерн выражен слабо':(v<=12?'Паттерн заметен':'Паттерн выражен сильно');
+      return {label:label, text:'Норвуд предлагает десять шагов восстановления, и первые из них просты: перенести внимание с партнёра на собственную жизнь, перестать контролировать и спасать, найти поддержку (подруги, группа, специалист), развивать духовную и телесную практику. Практики тренажёра: «Где я спасаю», «Дом внутри», «Стандарты и требования».', bars:[['Выраженность',v,20]]}; } },
+  { id:'deida', title:'Живу ли я из своей цели', book:'Д. Дейда · «Путь настоящего мужчины»', mode:'m',
+    intro:'Дейда считает, что устойчивость мужчины в отношениях определяется тем, живёт ли он из своего предназначения или из страха и потребности в одобрении.',
+    scale:['Нет','Отчасти','Да'],
+    items:[
+      {t:'Я знаю, чем хочу заниматься, и регулярно отдаю этому время', k:'p'},
+      {t:'Моё настроение не зависит от настроения партнёрши', k:'p'},
+      {t:'Я могу выдержать её эмоции, не убегая и не нападая', k:'p'},
+      {t:'Я принимаю решения и несу за них ответственность', k:'p'},
+      {t:'У меня есть мужской круг — друзья, с которыми можно быть честным', k:'p'},
+      {t:'Я занимаюсь телом и дисциплиной', k:'p'},
+      {t:'Я говорю правду, даже когда она неудобна', k:'p'},
+      {t:'Я не остаюсь в отношениях из страха одиночества', k:'p'},
+      {t:'Я знаю, чего хочу от партнёрши, и говорю об этом', k:'p'},
+      {t:'Я умею отдыхать без чувства вины', k:'p'}
+    ],
+    result:function(s){ var v=s.p; var label=v>=15?'Опора на цель сильная':(v>=8?'Опора есть, но колеблется':'Опора на цель слабая');
+      return {label:label, text:'Дейда советует три вещи: ежедневно отдавать время главному делу до всего остального, собрать мужской круг, который говорит правду, и учиться оставаться присутствующим рядом с эмоциями женщины. Практики: «Мой дар», «Жить из цели», «Взрослый у руля».', bars:[['Опора на цель',v,20]]}; } },
+  { id:'stay', title:'Расстаться нельзя остаться', book:'А. Карпавичус', mode:'both',
+    intro:'Инструмент для ясности. Он не принимает решение за тебя: он показывает, в какой из трёх зон находятся отношения по фактам. Отвечай про последние три месяца.',
+    scale:['Нет','Отчасти','Да'],
+    items:[
+      {t:'Мне в этих отношениях в целом хорошо, трудности временные', k:'keep'},
+      {t:'Мы умеем обсуждать проблемы и приходить к решению', k:'keep'},
+      {t:'Партнёр слышит меня, когда я говорю о важном', k:'keep'},
+      {t:'Я уважаю партнёра как человека', k:'keep'},
+      {t:'Я ощущаю себя собой рядом с партнёром', k:'keep'},
+      {t:'Я остаюсь из страха, жалости или привычки', k:'go'},
+      {t:'Одна и та же проблема повторяется больше года без изменений', k:'go'},
+      {t:'Есть то, что я не могу принять: обман, унижение, насилие, зависимость', k:'go'},
+      {t:'Я уже пробовал{|а} всё, что мог{|ла}, и ничего не изменилось', k:'go'},
+      {t:'Мысль о расставании приносит облегчение чаще, чем страх', k:'go'}
+    ],
+    result:function(s){ var k=s.keep, g=s.go; var label, text;
+      if(g>=7&&k<=4){ label='Зона честного расставания'; text='По фактам отношения не ремонтируются или ремонт невозможен без второй стороны. Карпавичус советует расставаться ясно: без мести, без «посмотрим», с планом на первые недели. Практики: «Решение принимаю я», «Дом внутри», «Банк доказательств».'; }
+      else if(k>=7&&g<=4){ label='Зона работы над отношениями'; text='Основа крепкая, трудности решаемы. Направь усилия в практики «Крепкая семья»: карта любви, отклик на попытки сближения, формула потребности, разговор о танце.'; }
+      else { label='Зона паузы и разговора'; text='Факты смешанные. Карпавичус предлагает назначить срок (например, три месяца), договориться с партнёром о конкретных изменениях и честно оценить результат по сроку. Практика «Расстаться нельзя остаться» в направлении «Крепкая семья» поможет сформулировать условия.'; }
+      return {label:label, text:text+' Если в ответах есть насилие или зависимость, решение требует помощи специалиста.', bars:[['Основания остаться',k,10],['Основания уйти',g,10]]}; } }
+];
+
+var BOOKS = [
+  {a:'Стив Харви', t:'Поступай как женщина, думай как мужчина', idea:'Мужчину, по Харви, ведут три вещи: кто он, что он делает и сколько зарабатывает; любовь он проявляет через заявление о женщине, обеспечение и защиту.', tool:'Стандарты и требования: ясный список того, как с тобой можно и чего ты ждёшь.'},
+  {a:'Робин Норвуд', t:'Женщины, которые любят слишком сильно', idea:'Любовь, которая означает страдание, спасение и контроль, воспроизводит детский опыт заботы о взрослых.', tool:'Перенос внимания с партнёра на собственную жизнь; группа поддержки.'},
+  {a:'Дин Делис, Кассандра Филлипс', t:'Парадокс страсти', idea:'В паре почти всегда один любит сильнее, и его зависимость снижает его привлекательность; тот, кто любит меньше, страдает от вины.', tool:'«Нижнему» — вернуть центр тяжести в свою жизнь; «верхнему» — честность.'},
+  {a:'Джон Грэй', t:'Мужчины с Марса, женщины с Венеры', idea:'Мужчины и женщины по-разному восстанавливаются и по-разному слышат: мужчина чинит, женщина хочет быть услышанной.', tool:'Пещера и волна: предупреждать о своём способе восстановления.'},
+  {a:'Андрей Курпатов', t:'Мужчина и женщина', idea:'Поведение в отношениях объясняется работой мозга и гормонов; самооценка и привычки тренируются повторением.', tool:'Цепочка «страх → факт → действие»; банк доказательств.'},
+  {a:'Эстер Перель', t:'Всегда желанные', idea:'Желание питается расстоянием, новизной и автономией; слияние убивает страсть.', tool:'Собственная территория у каждого партнёра.'},
+  {a:'Хелен Фишер', t:'Исследования биологии любви (Soulmate)', idea:'Любовь складывается из трёх систем мозга (влечение, романтическая любовь, привязанность); темперамент задаёт четыре типа.', tool:'Знать свой тип и тип партнёра, питать ведущую систему.'},
+  {a:'Джон Готтман', t:'7 принципов счастливого брака', idea:'Устойчивость брака предсказуема по стилю ссор и по частоте маленьких откликов.', tool:'Карта любви, отклик на попытки сближения, противоядия четырём всадникам.'},
+  {a:'Эрих Фромм', t:'Искусство любить', idea:'Любовь — умение, которому учатся; её элементы: забота, ответственность, уважение, знание.', tool:'Практиковать четыре элемента по отношению к себе и партнёру.'},
+  {a:'Владимир Павлов', t:'Мужские обиды, женские намёки', idea:'Главный сбой в паре — непереведённые сигналы: женские намёки и мужские молчаливые обиды.', tool:'Намёк → прямая просьба; обида → слова.'},
+  {a:'Дэвид Дейда', t:'Путь настоящего мужчины', idea:'Мужчина устойчив, когда живёт из своего предназначения, а не из страха; женщина раскрывается рядом с таким присутствием.', tool:'Время на главное дело каждый день; мужской круг.'},
+  {a:'Руслан Нарушевич', t:'Учимся любить друг друга', idea:'Любовь растёт из служения и уважения к природе мужчины и женщины.', tool:'Дело для близкого без ожидания ответа.'},
+  {a:'Амир Левин, Рэйчел Хеллер', t:'Подходим друг другу', idea:'Три стиля привязанности определяют поведение в близости; тревожный и избегающий образуют «ловушку».', tool:'Эффективная коммуникация потребностей; распознавание протестного поведения.'},
+  {a:'Гэри Чепмен', t:'Любовь как образ жизни', idea:'Любящий характер складывается из семи черт, каждую можно тренировать действием.', tool:'Одна черта — одно действие в день.'},
+  {a:'Сью Джонсон', t:'Обними меня крепче (и практика)', idea:'Ссоры пары — «негативный танец» вокруг вопроса «ты рядом?»; эмоционально-фокусированная терапия учит его останавливать.', tool:'Семь разговоров; формула ARE: доступность, отзывчивость, вовлечённость.'},
+  {a:'Гэри Левандовски', t:'Крепче, чем ты думаешь', idea:'Большинство пар недооценивают свои отношения, сравнивая их с нереалистичными образами; здоровые отношения расширяют личность.', tool:'Саморасширение: что я приобрёл благодаря отношениям и себе.'},
+  {a:'Ольга Примаченко', t:'С тобой я дома', idea:'Отношения как дом, где можно быть собой; бережность к себе как основа.', tool:'Дом внутри; «достаточно хорошо».'},
+  {a:'Стефани Шталь', t:'Ребёнок в тебе может найти любовь', idea:'Конфликты в паре запускает «теневой ребёнок» с ранними убеждениями; «внутренний взрослый» умеет переключать.', tool:'Портреты солнечного и теневого ребёнка; взрослый у руля.'},
+  {a:'Инна Литвиненко', t:'Любовь — не боль', idea:'Привычка терпеть превращает отношения в боль; критерий здоровья — прибавляются ли силы.', tool:'Право голоса; вежливое «нет».'},
+  {a:'Артём Карпавичус', t:'Расстаться нельзя остаться', idea:'Два разных вопроса: «мне плохо» и «отношения не ремонтируются»; откладывание решения истощает сильнее любого исхода.', tool:'Разбор по фактам; срок на изменения; ясное решение.'}
+];
+
+</script>
+<script>
+(function(){
+  var LS='krepche-v1';
+  var st={ mode:'', route:'main', day:1, started:'', done:{}, v:{}, steps:{}, bank:[], log:[], quiz:{} };
+  try{ var l=JSON.parse(localStorage.getItem(LS)||'null'); if(l) st=Object.assign(st,l); }catch(e){}
+  if(!st.done.main&&!st.done.low){ st.done={main:st.done||{},low:{}}; } if(!st.route) st.route='main'; if(!st.dayLow) st.dayLow=1;
+  function prog(){ return st.route==='low'?PROGRAM_LOW:PROGRAM; }
+  function R(){ return ROUTES[st.route]; }
+  function curDay(){ return st.route==='low'?st.dayLow:st.day; }
+  function setDay(n){ if(st.route==='low') st.dayLow=n; else st.day=n; }
+  function doneMap(){ return st.done[st.route]; }
+  function save(){ try{ localStorage.setItem(LS,JSON.stringify(st)); }catch(e){} }
+  var tab='today', view=null, trackView=null, quizView=null;
+  try{ tab=sessionStorage.getItem('kr-tab')||'today'; }catch(e){}
+  var S={today:el('s-today'),tracks:el('s-tracks'),quiz:el('s-quiz'),books:el('s-books'),me:el('s-me')};
+  var statusEl=el('status'), stTimer;
+  function el(id){ return document.getElementById(id); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function G(s){ return String(s).replace(/\{([^{}|]*)\|([^{}]*)\}/g,function(_,m,f){ return st.mode==='m'?m:f; }); }
+  function T(s){ return esc(G(s)); }
+  function toast(m){ statusEl.textContent=m; statusEl.classList.add('show'); clearTimeout(stTimer); stTimer=setTimeout(function(){statusEl.classList.remove('show');},1500); }
+  function today(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function short(iso){ var d=new Date(iso+'T12:00:00'); return d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'}); }
+  function pr(id){ for(var i=0;i<PRACTICES.length;i++) if(PRACTICES[i].id===id) return PRACTICES[i]; }
+  function tr(id){ for(var i=0;i<TRACKS.length;i++) if(TRACKS[i].id===id) return TRACKS[i]; }
+  function val(id,def){ var v=st.v[id]; return v==null?def:v; }
+  function dayOf(pid){ return prog().indexOf(pid)+1; }
+
+  /* ---------- practice renderer ---------- */
+  function renderPractice(p, ctx){
+    var t=tr(p.track), h='', ex=p.ex, id=p.id;
+    h+='<section class="card t" style="--tc:'+t.color+'"><div class="head"><h2>'+T(p.title)+'</h2><span class="muted">'+esc(t.name)+'</span></div>';
+    h+='<div class="book">'+T(p.book)+'</div><p class="idea">'+T(p.idea)+'</p></section>';
+    h+='<section class="card" style="--tc:'+t.color+'"><div class="eyebrow" style="color:'+t.color+'">Упражнение</div><p style="font-size:14px">'+T(ex.prompt)+'</p>';
+    if(ex.type==='fields'){ ex.fields.forEach(function(f,i){ h+='<div class="field"><label>'+T(f)+'</label><textarea data-v="'+id+'_f'+i+'" placeholder="Напиши здесь">'+esc(val(id+'_f'+i,''))+'</textarea></div>'; }); }
+    else if(ex.type==='list'){ h+='<div class="kt">'; for(var i=0;i<ex.count;i++){ h+='<div class="r"><span>'+(i+1)+'</span><input type="text" data-v="'+id+'_l'+i+'" value="'+esc(val(id+'_l'+i,''))+'" placeholder="…"></div>'; } h+='</div>'; if(ex.bank) h+='<button type="button" class="ghost" data-act="bank" data-p="'+id+'" style="justify-self:start">Положить в банк доказательств</button>'; }
+    else if(ex.type==='scale'){ h+='<div class="sc">'; ex.items.forEach(function(it,i){ var v=val(id+'_s'+i,5); h+='<div class="it"><label>'+T(it)+'<b>'+v+'</b></label><input type="range" min="0" max="10" value="'+v+'" data-v="'+id+'_s'+i+'"></div>'; }); h+='</div>'; }
+    else if(ex.type==='choice'){ var cur=val(id+'_c',''); h+='<div class="chips">'+ex.options.map(function(o){ return '<button type="button" class="chip" data-act="choice" data-p="'+id+'" data-o="'+esc(o)+'" aria-pressed="'+(cur===o)+'">'+esc(o)+'</button>'; }).join('')+'</div><div class="field"><label>'+T(ex.after)+'</label><textarea data-v="'+id+'_f0" placeholder="Напиши здесь">'+esc(val(id+'_f0',''))+'</textarea></div>'; }
+    h+='</section>';
+    var sd=!!st.steps[id];
+    h+='<section class="card" style="--tc:'+t.color+'"><div class="eyebrow" style="color:'+t.color+'">Маленький шаг</div><button type="button" class="task" data-act="step" data-p="'+id+'" aria-pressed="'+sd+'"><span class="bx">✓</span><span class="tx">'+T(p.step)+'</span></button>';
+    h+='<div class="field"><label>'+T(p.q)+'</label><textarea data-v="'+id+'_q" placeholder="Ответ вечером">'+esc(val(id+'_q',''))+'</textarea></div>';
+    if(ctx==='today'){ var n=dayOf(id), isDone=!!doneMap()[n]; h+='<button type="button" class="primary" data-act="done" data-n="'+n+'">'+(isDone?'День отмечен ✓':'Завершить день '+n)+'</button>'; }
+    h+='</section>';
+    return h;
+  }
+
+  /* ---------- screens ---------- */
+  function renderWelcome(){
+    return '<section class="welcome"><div class="eyebrow">Личностный тренажёр</div><h1>Крепче</h1><p class="muted" style="font-size:15px;max-width:38ch;margin:0 auto">28 дней практик по 24 книгам об отношениях. Четыре направления: любовь к себе, вера в себя, искусство маленьких шагов, крепкая семья.</p><div class="mode"><button type="button" data-act="mode" data-m="f" aria-selected="false">Женский режим</button><button type="button" data-act="mode" data-m="m" aria-selected="false">Мужской режим</button></div><p class="muted">Режим меняет обращение и часть практик. В мужском режиме есть короткий маршрут «Когда нет сил» на 7 дней. Переключить режим можно на вкладке «Путь».</p></section>';
+  }
+  function renderToday(){
+    if(!st.mode){ S.today.innerHTML=renderWelcome(); return; }
+    if(st.mode!=='m'&&st.route==='low'){ st.route='main'; save(); }
+    var P=prog(), N=R().days, n=Math.min(N,view==null?curDay():view), pid=P[n-1], p=pr(pid), t=tr(p.track), dm=doneMap(), doneN=Object.keys(dm).length, h='';
+    h+='<header><div class="eyebrow">Крепче · '+(st.mode==='m'?'мужской режим':'женский режим')+'</div><h1>День '+n+'</h1><div class="muted">'+esc(t.name)+' · '+(n===curDay()?'текущий день':'просмотр')+(st.started?' · начало '+esc(short(st.started)):'')+'</div></header>';
+    if(st.mode==='m') h+='<div class="mode"><button type="button" data-act="route" data-r="main" aria-selected="'+(st.route==='main')+'">Основной · 28</button><button type="button" data-act="route" data-r="low" aria-selected="'+(st.route==='low')+'">Когда нет сил · 7</button></div>'+(st.route==='low'?'<p class="muted">'+esc(ROUTES.low.intro)+'. После семи дней можно перейти на основной маршрут.</p>':'');
+    h+='<div class="daybar"><button type="button" data-act="prev"'+(n<=1?' disabled style="opacity:.3"':'')+'>‹</button><div class="d"><b>'+doneN+' / '+N+'</b><small>дней пройдено</small></div><button type="button" data-act="next"'+(n>=N?' disabled style="opacity:.3"':'')+'>›</button></div>';
+    h+='<div class="bar"><i style="width:'+(doneN/N*100).toFixed(0)+'%"></i></div>';
+    h+=renderPractice(p,'today');
+    if(n!==curDay()) h+='<button type="button" class="ghost" data-act="goto" data-n="'+n+'" style="justify-self:center">Сделать этот день текущим</button>';
+    if(st.route==='low'&&doneN>=7) h+='<section class="card res"><div class="eyebrow">Маршрут пройден</div><p style="font-size:14px">Семь дней восстановления позади. Следующий шаг — основной маршрут на 28 дней: он укрепит то, что уже появилось.</p><button type="button" class="primary" data-act="route" data-r="main">Перейти на основной</button></section>';
+    h+='<details><summary>Все дни маршрута</summary><div class="in"><div class="grid28">'+P.map(function(id,i){ var tt=tr(pr(id).track); return '<button type="button" data-act="view" data-n="'+(i+1)+'" class="'+(dm[i+1]?'on':'')+(i+1===curDay()?' cur':'')+'" style="--tc:'+tt.color+'" title="'+esc(pr(id).title)+'">'+(i+1)+'</button>'; }).join('')+'</div><div class="muted">'+TRACKS.map(function(x){return '<span style="color:'+x.color+'">●</span> '+esc(x.name);}).join(' &nbsp; ')+'</div></div></details>';
+    S.today.innerHTML=h;
+  }
+  function renderTracks(){
+    var h='';
+    if(view&&pr(view)){ var p=pr(view); h+='<button type="button" class="back" data-act="back-track">‹ '+esc(tr(p.track).name)+'</button>'+renderPractice(p,'browse'); S.tracks.innerHTML=h; return; }
+    if(trackView){ var t=tr(trackView); h+='<button type="button" class="back" data-act="back-tracks">‹ Все направления</button><header><h1 style="color:'+t.color+'">'+esc(t.name)+'</h1><p class="muted" style="font-size:14px">'+esc(t.intro)+'</p></header><div class="plist">';
+      PRACTICES.filter(function(x){return x.track===trackView&&(!x.mode||x.mode===st.mode);}).forEach(function(p,i){ h+='<button type="button" data-act="open" data-p="'+p.id+'" style="--tc:'+t.color+'"><b>'+(i+1)+'</b><span>'+T(p.title)+'<small>'+T(p.book)+'</small></span><span class="ok">'+(st.steps[p.id]?'✓':'')+'</span></button>'; });
+      h+='</div>'; S.tracks.innerHTML=h; return; }
+    h+='<header><div class="eyebrow">Четыре направления</div><h1>Практики</h1><p class="muted">По семь практик в каждом. Можно идти по программе на вкладке «Сегодня» или выбирать свободно.</p></header><div class="tracklist">';
+    TRACKS.forEach(function(t){ var ps=PRACTICES.filter(function(x){return x.track===t.id&&(!x.mode||x.mode===st.mode);}), d=ps.filter(function(x){return st.steps[x.id];}).length; h+='<button type="button" data-act="track" data-t="'+t.id+'" style="--tc:'+t.color+'"><i></i><span><b>'+esc(t.name)+'</b><small>'+esc(t.intro.split('.')[0])+'.</small></span><span class="n">'+d+'/'+ps.length+'</span></button>'; });
+    h+='</div>'; S.tracks.innerHTML=h;
+  }
+  function renderQuiz(){
+    var h='', list=QUIZZES.filter(function(q){return q.mode==='both'||q.mode===st.mode;});
+    if(quizView){ var q=null; list.forEach(function(x){ if(x.id===quizView) q=x; }); if(!q){ quizView=null; return renderQuiz(); }
+      var a=st.quiz[q.id]||{}; h+='<button type="button" class="back" data-act="back-quiz">‹ Все тесты</button><header><h1>'+esc(q.title)+'</h1><div class="book">'+esc(q.book)+'</div><p class="muted" style="font-size:14px">'+esc(q.intro)+'</p></header>';
+      h+='<section class="card q">'+q.items.map(function(it,i){ return '<div class="qi"><p>'+T(it.t)+'</p><div class="opts">'+q.scale.map(function(s,k){ return '<button type="button" data-act="ans" data-q="'+q.id+'" data-i="'+i+'" data-k="'+k+'" aria-pressed="'+(a[i]===k)+'">'+esc(s)+'</button>'; }).join('')+'</div></div>'; }).join('')+'</section>';
+      var answered=Object.keys(a).length;
+      if(answered===q.items.length){ var sc={}; q.items.forEach(function(it,i){ sc[it.k]=(sc[it.k]||0)+a[i]; }); q.items.forEach(function(it){ if(sc[it.k]==null) sc[it.k]=0; }); var r=q.result(sc);
+        h+='<section class="card res"><div class="eyebrow">Результат</div><div class="lab">'+T(r.label)+'</div><p style="font-size:14px">'+T(r.text)+'</p><div class="bars">'+r.bars.map(function(b){ return '<div class="b"><span>'+esc(b[0])+'</span><span class="muted">'+b[1]+' / '+b[2]+'</span><div class="bar"><i style="width:'+(b[1]/b[2]*100).toFixed(0)+'%"></i></div></div>'; }).join('')+'</div><button type="button" class="ghost" data-act="requiz" data-q="'+q.id+'" style="justify-self:start">Пройти заново</button></section>'; }
+      else h+='<p class="muted" style="text-align:center">Отвечено '+answered+' из '+q.items.length+'</p>';
+      S.quiz.innerHTML=h; return; }
+    h+='<header><div class="eyebrow">Диагностика</div><h1>Тесты</h1><p class="muted">Короткие опросники из книг. Результат показывает, с какого направления начать.</p></header><div class="plist">';
+    list.forEach(function(q){ var a=st.quiz[q.id]||{}, full=Object.keys(a).length===q.items.length; h+='<button type="button" data-act="quiz" data-q="'+q.id+'" style="--tc:var(--accent)"><b>'+(full?'✓':'?')+'</b><span>'+esc(q.title)+'<small>'+esc(q.book)+'</small></span><span class="muted">'+q.items.length+' в.</span></button>'; });
+    h+='</div>'; S.quiz.innerHTML=h;
+  }
+  function renderBooks(){
+    var h='<header><div class="eyebrow">Библиотека</div><h1>Книги</h1><p class="muted">Главная мысль и рабочий инструмент из каждой книги.</p></header><div class="booklist">';
+    BOOKS.forEach(function(b){ h+='<div class="bk"><div class="a">'+esc(b.a)+'</div><b>«'+esc(b.t)+'»</b><p>'+esc(b.idea)+'</p><div class="tl">Инструмент: '+esc(b.tool)+'</div></div>'; });
+    S.books.innerHTML=h+'</div>';
+  }
+  function renderMe(){
+    var doneN=Object.keys(st.done.main).length+Object.keys(st.done.low).length, stepsN=Object.keys(st.steps).filter(function(k){return st.steps[k];}).length, h='';
+    h+='<header><div class="eyebrow">Мой путь</div><h1>Путь</h1></header>';
+    h+='<div class="stats"><div class="stat"><b>'+doneN+'</b><small>дней пройдено</small></div><div class="stat"><b>'+stepsN+'</b><small>маленьких шагов</small></div><div class="stat"><b>'+st.bank.length+'</b><small>в банке доказательств</small></div></div>';
+    h+='<section class="card"><div class="eyebrow">Банк доказательств</div><p class="muted">Факты, что я справляюсь. Перечитывать в трудный день.</p><div class="log">'+st.bank.slice().reverse().map(function(e,i){ var idx=st.bank.length-1-i; return '<div class="e"><span>'+esc(e.t)+'<small>'+esc(short(e.d))+'</small></span><button type="button" class="x" data-act="bank-del" data-i="'+idx+'">×</button></div>'; }).join('')+'</div><div class="addrow"><input type="text" id="bank-new" placeholder="Сегодня я справил'+(st.mode==='m'?'ся':'ась')+' с…"><button type="button" data-act="bank-add">+</button></div></section>';
+    h+='<section class="card"><div class="eyebrow">Журнал шагов</div><p class="muted">Любое реальное действие: разговор, «нет», час на своё дело.</p><div class="log">'+st.log.slice().reverse().map(function(e,i){ var idx=st.log.length-1-i; return '<div class="e"><span>'+esc(e.t)+'<small>'+esc(short(e.d))+'</small></span><button type="button" class="x" data-act="log-del" data-i="'+idx+'">×</button></div>'; }).join('')+'</div><div class="addrow"><input type="text" id="log-new" placeholder="Что я сделал'+(st.mode==='m'?'':'а')+' сегодня"><button type="button" data-act="log-add">+</button></div></section>';
+    h+='<section class="card"><div class="eyebrow">Режим</div><div class="mode"><button type="button" data-act="mode" data-m="f" aria-selected="'+(st.mode==='f')+'">Женский</button><button type="button" data-act="mode" data-m="m" aria-selected="'+(st.mode==='m')+'">Мужской</button></div><p class="muted">Приложение работает без интернета. Записи хранятся на этом устройстве; для переноса используй блок ниже.</p><button type="button" class="ghost" data-act="reset" style="justify-self:start;font-size:12px">Сбросить программу (записи останутся)</button></section>';
+    h+='<section class="card"><div class="eyebrow">Перенос на другое устройство</div><p class="muted">Скопируй код здесь, вставь его в такое же поле на другом телефоне и нажми «Загрузить». Загрузка заменит записи на том устройстве.</p><div class="addrow"><button type="button" class="ghost" data-act="export" style="justify-self:start">Скопировать мои записи</button></div><textarea id="import-box" placeholder="Вставь код записей сюда" style="min-height:56px;font-size:12px"></textarea><div class="addrow"><span></span><button type="button" data-act="import">Загрузить</button></div></section>';
+    S.me.innerHTML=h;
+  }
+  function render(){ el('nav').hidden=!st.mode; Object.keys(S).forEach(function(k){ S[k].hidden=(k!==tab); }); document.querySelectorAll('nav.bottom button').forEach(function(b){ b.setAttribute('aria-selected', b.getAttribute('data-tab')===tab); });
+    if(tab==='today') renderToday(); else if(tab==='tracks') renderTracks(); else if(tab==='quiz') renderQuiz(); else if(tab==='books') renderBooks(); else renderMe(); }
+
+  /* ---------- events ---------- */
+  el('nav').addEventListener('click',function(e){ var b=e.target.closest('[data-tab]'); if(!b) return; tab=b.getAttribute('data-tab'); view=null; try{sessionStorage.setItem('kr-tab',tab);}catch(x){} render(); window.scrollTo(0,0); });
+  var root=el('root');
+  root.addEventListener('input',function(e){ var k=e.target.getAttribute('data-v'); if(!k) return; st.v[k]=e.target.type==='range'?Number(e.target.value):e.target.value; if(e.target.type==='range'){ var b=e.target.previousElementSibling.querySelector('b'); if(b) b.textContent=e.target.value; } save(); });
+  root.addEventListener('keydown',function(e){ if(e.key==='Enter'&&(e.target.id==='bank-new'||e.target.id==='log-new')){ e.preventDefault(); e.target.parentNode.querySelector('button').click(); } });
+  root.addEventListener('click',function(e){ var b=e.target.closest('[data-act]'); if(!b) return; var act=b.getAttribute('data-act');
+    if(act==='mode'){ st.mode=b.getAttribute('data-m'); if(!st.started) st.started=today(); if(st.mode!=='m') st.route='main'; save(); render(); toast(st.mode==='m'?'Мужской режим':'Женский режим'); }
+    else if(act==='route'){ st.route=b.getAttribute('data-r'); view=null; save(); tab='today'; render(); window.scrollTo(0,0); toast('Маршрут: '+ROUTES[st.route].name); }
+    else if(act==='export'){ var txt=JSON.stringify(st); var ok=function(){ toast('Скопировано ✦'); }; var fb=function(){ var ib=el('import-box'); if(ib){ ib.value=txt; ib.focus(); ib.select(); } toast('Выдели и скопируй текст в поле'); }; if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok,fb); } else fb(); }
+    else if(act==='import'){ var ib2=el('import-box'); try{ var d=JSON.parse(ib2.value); if(!d||typeof d!=='object'||!d.v) throw 0; st=Object.assign({mode:'',route:'main',day:1,dayLow:1,started:'',done:{main:{},low:{}},v:{},steps:{},bank:[],log:[],quiz:{}},d); if(!st.done.main) st.done={main:st.done||{},low:{}}; save(); render(); toast('Записи загружены ✦'); }catch(e){ toast('Код не распознан'); } }
+    else if(act==='prev'){ view=Math.max(1,(view==null?curDay():view)-1); renderToday(); window.scrollTo(0,0); }
+    else if(act==='next'){ view=Math.min(R().days,(view==null?curDay():view)+1); renderToday(); window.scrollTo(0,0); }
+    else if(act==='view'){ view=Number(b.getAttribute('data-n')); renderToday(); window.scrollTo(0,0); }
+    else if(act==='goto'){ setDay(Number(b.getAttribute('data-n'))); view=null; save(); renderToday(); }
+    else if(act==='done'){ var n=Number(b.getAttribute('data-n')), dm2=doneMap(); if(dm2[n]){ delete dm2[n]; } else { dm2[n]=today(); if(n===curDay()&&curDay()<R().days) setDay(curDay()+1); view=null; toast('День '+n+' пройден ✦'); } save(); renderToday(); window.scrollTo(0,0); }
+    else if(act==='step'){ var p=b.getAttribute('data-p'); st.steps[p]=!st.steps[p]; b.setAttribute('aria-pressed',st.steps[p]); if(st.steps[p]){ var pp=pr(p); st.log.push({d:today(),t:G(pp.step).replace(/^Сегодня: /,'').replace(/\.$/,'')}); toast('Шаг сделан ✦'); } save(); }
+    else if(act==='choice'){ var p2=b.getAttribute('data-p'); st.v[p2+'_c']=b.getAttribute('data-o'); save(); b.parentNode.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed',c===b); }); }
+    else if(act==='bank'){ var p3=b.getAttribute('data-p'), c=0; for(var i=0;i<3;i++){ var v=(st.v[p3+'_l'+i]||'').trim(); if(v){ st.bank.push({d:today(),t:v}); c++; } } save(); toast(c?'Добавлено: '+c:'Сначала заполни строки'); }
+    else if(act==='track'){ trackView=b.getAttribute('data-t'); view=null; renderTracks(); window.scrollTo(0,0); }
+    else if(act==='open'){ view=b.getAttribute('data-p'); renderTracks(); window.scrollTo(0,0); }
+    else if(act==='back-track'){ view=null; renderTracks(); window.scrollTo(0,0); }
+    else if(act==='back-tracks'){ trackView=null; view=null; renderTracks(); window.scrollTo(0,0); }
+    else if(act==='quiz'){ quizView=b.getAttribute('data-q'); renderQuiz(); window.scrollTo(0,0); }
+    else if(act==='back-quiz'){ quizView=null; renderQuiz(); window.scrollTo(0,0); }
+    else if(act==='ans'){ var q=b.getAttribute('data-q'); st.quiz[q]=st.quiz[q]||{}; st.quiz[q][b.getAttribute('data-i')]=Number(b.getAttribute('data-k')); save(); var y=window.scrollY; renderQuiz(); window.scrollTo(0,y); }
+    else if(act==='requiz'){ delete st.quiz[b.getAttribute('data-q')]; save(); renderQuiz(); window.scrollTo(0,0); }
+    else if(act==='bank-add'){ var inp=el('bank-new'), v2=inp.value.trim(); if(!v2) return; st.bank.push({d:today(),t:v2}); save(); renderMe(); el('bank-new').focus(); }
+    else if(act==='bank-del'){ st.bank.splice(Number(b.getAttribute('data-i')),1); save(); renderMe(); }
+    else if(act==='log-add'){ var inp2=el('log-new'), v3=inp2.value.trim(); if(!v3) return; st.log.push({d:today(),t:v3}); save(); renderMe(); el('log-new').focus(); }
+    else if(act==='log-del'){ st.log.splice(Number(b.getAttribute('data-i')),1); save(); renderMe(); }
+    else if(act==='reset'){ if(b.getAttribute('data-sure')!=='1'){ b.setAttribute('data-sure','1'); b.textContent='Точно сбросить? Нажми ещё раз'; return; } st.day=1; st.dayLow=1; st.done={main:{},low:{}}; st.steps={}; st.started=today(); save(); renderMe(); toast('Программа начата заново'); }
+  });
+  render();
+})();
+</script>
+
+<script>
+if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+</script>
+</body>
+</html>
